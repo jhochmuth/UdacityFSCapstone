@@ -7,6 +7,7 @@ flask_sqlalchemy
 gunicorn
 itsdangerous==1.1.0
 Jinja2==2.10.1
+pytest
 python-jose
 python-dotenv
 MarkupSafe==1.1.1
