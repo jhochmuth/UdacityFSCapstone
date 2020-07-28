@@ -3,9 +3,8 @@ from sqlalchemy import Column, String, DateTime, Integer, Boolean, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-DB_USER = os.getenv('DB_USER')
-DB_PASS = os.getenv('DB_PASS')
-database_path = 'postgresql://{}:{}@localhost:5432/casting'.format(DB_USER, DB_PASS)
+SECRET_KEY = os.urandom(24)
+database_path = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
