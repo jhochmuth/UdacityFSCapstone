@@ -1,5 +1,5 @@
-from .flaskr import create_app
-from .models import db, Actor, Movie
+from flaskr import create_app
+from models import db, Actor, Movie
 import os
 import json
 import pytest
