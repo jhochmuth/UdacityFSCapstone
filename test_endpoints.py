@@ -7,9 +7,6 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 
-DB_USER = os.getenv('DB_USER')
-DB_PASS = os.getenv('DB_PASS')
-
 # Load JWT tokens from .env file and create respective headers.
 load_dotenv()
 EXECUTIVE_PRODUCER_TOKEN = os.getenv('EXECUTIVE_PRODUCER_TOKEN')
@@ -26,7 +23,6 @@ CASTING_ASSISTANT_HEADER = {'Authorization': 'Bearer {}'.format(CASTING_ASSISTAN
 def client():
     app = create_app()
     client = app.test_client()
-    database_path = 'postgresql://{}:{}@localhost:5432/casting'.format(DB_USER, DB_PASS)
     yield client
 
 def test_get_actors(client):

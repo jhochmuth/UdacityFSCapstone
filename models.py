@@ -2,7 +2,10 @@ import os
 from sqlalchemy import Column, String, DateTime, Integer, Boolean, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
+from dotenv import load_dotenv
 
+
+load_dotenv()
 SECRET_KEY = os.urandom(24)
 database_path = os.environ['DATABASE_URL']
 
