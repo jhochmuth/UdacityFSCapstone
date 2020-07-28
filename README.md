@@ -5,6 +5,14 @@ The backend for a casting agency website. The capstone project for the Full Stac
 ## Usage (deployed API)
 The API can be accessed at https://capstone-fs-udacity.herokuapp.com/. See the API reference for a full list of endpoints.
 
+All requests require a JWT in the authorization header. The setup.sh script will set these JWTs at ```EXECUTIVE_PRODUCER_TOKEN```, ```CASTING_DIRECTOR_TOKEN```, and ```CASTING_ASSISTANT_TOKEN```. These tokens will only be valid for a certain period of time. If you need to regenerate tokens, visit the auth0 login page (provided in authURL.txt or you can create it using the variables provided in setup.sh) and login using one of these users. 
+
+Executive producer: executive_producer@gmail.com, Password1
+Casting director: casting_director@gmail.com, Password1
+Casting assistant: casting_assistant@gmail.com, Password1
+
+For more information on the roles, see RBAC.
+
 ## Usage (local development server)
 Create a virtual environment and install the required backend dependencies by running ```$ pip install -r requirements.txt```.
 
@@ -17,14 +25,6 @@ $ flask run
 ```
 
 The server will now be running at localhost:5000. You may need to update the DATABASE_URL variable with the database username and password if required.
-
-All requests require a JWT in the authorization header. The setup.sh script will set these JWTs at ```EXECUTIVE_PRODUCER_TOKEN```, ```CASTING_DIRECTOR_TOKEN```, and ```CASTING_ASSISTANT_TOKEN```. These tokens will only be valid for a certain period of time. If you need to regenerate tokens, visit the auth0 login page (provided in authURL.txt or you can create it using the variables provided in setup.sh) and login using one of these users. 
-
-Executive producer: executive_producer@gmail.com, Password1
-Casting director: casting_director@gmail.com, Password1
-Casting assistant: casting_assistant@gmail.com, Password1
-
-For more information on the roles, see RBAC.
 
 ## Endpoints
 
