@@ -1,1 +1,0 @@
-authURL: https://fs-udacity-project3.us.auth0.com/authorize?audience=casting&response_type=token&client_id=Us5oQ3RY3PDW0uLnW9PsVdcXKEgga7mT&redirect_uri=http://localhost:8000
