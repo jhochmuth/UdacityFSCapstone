@@ -3,26 +3,29 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import os
 
 
-AUTH0_DOMAIN = 'fs-udacity-project3.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'casting'
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
-## AuthError Exception
+
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
 
-## Auth Header
-
-# Code taken from Udacity FS example project: https://github.com/udacity/FSND/tree/master/BasicFlaskAuth
+# Code taken from Udacity FS example project:
+# https://github.com/udacity/FSND/tree/master/BasicFlaskAuth
 
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
@@ -36,7 +39,7 @@ def get_token_auth_header():
     if parts[0].lower() != 'bearer':
         raise AuthError({
                         'code': 'invalid_header',
-                        'description': 'Authorization header must start with "Bearer".'
+                        'description': 'Header must start with "Bearer".'
                         }, 401)
 
     elif len(parts) == 1:
@@ -44,15 +47,16 @@ def get_token_auth_header():
                         'code': 'invalid_header',
                         'description': 'Token not found.'
                         }, 401)
-        
+
     elif len(parts) > 2:
         raise AuthError({
                         'code': 'invalid_header',
-                        'description': 'Authorization header must be bearer token.'
+                        'description': 'Auth header must be bearer token.'
                         }, 401)
 
     token = parts[1]
     return token
+
 
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
@@ -67,6 +71,7 @@ def check_permissions(permission, payload):
                         'description': 'Permission not found.'
                         }, 403)
     return True
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -87,7 +92,7 @@ def verify_decode_jwt(token):
                 'use': key['use'],
                 'n': key['n'],
                 'e': key['e']
-        }
+            }
     if rsa_key:
         try:
             payload = jwt.decode(
@@ -99,7 +104,7 @@ def verify_decode_jwt(token):
                                  )
 
             return payload
-                    
+
         except jwt.ExpiredSignatureError:
             raise AuthError({
                         'code': 'token_expired',
@@ -109,17 +114,18 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                             'code': 'invalid_claims',
-                            'description': 'Incorrect claims. Please, check the audience and issuer.'
+                            'description': 'Incorrect claims.'
                             }, 401)
         except Exception:
             raise AuthError({
                             'code': 'invalid_header',
-                            'description': 'Unable to parse authentication token.'
+                            'description': 'Unable to parse token.'
                             }, 400)
     raise AuthError({
                     'code': 'invalid_header',
                     'description': 'Unable to find the appropriate key.'
                     }, 400)
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
